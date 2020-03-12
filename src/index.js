@@ -10,7 +10,7 @@ app.get('/',async (req,res)=>{
     res.end('oke')
 })
 
-var server = app.listen(4321, function () {  
+var server = app.listen(80, function () {  
     var host = server.address().address  
     var port = server.address().port  
     console.log("Example app listening at http://%s:%s", host, port)  
