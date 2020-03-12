@@ -6,7 +6,8 @@ import {resultData} from './lib/cache';
 var app = express();  
 
 app.get('/',async (req,res)=>{
-    return await resultData()
+    // return await resultData()
+    res.end('oke')
 })
 
 var server = app.listen(4321, function () {  
