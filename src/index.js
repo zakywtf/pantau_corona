@@ -1,13 +1,18 @@
-// var express = require('express');
 import express from 'express';
-import {parseHtml} from './lib/scraping.js'; 
 import {resultData} from './lib/cache';
-// var SERVER_URI = require('../src/lib/scraping')
+import handleCtrl from './lib/ctrlHandler'
+
 var app = express();  
 
 app.get('/',async (req,res)=>{
-    // return await resultData()
     res.end('oke')
+})
+
+app.get('/corona/countries', async (req, res) => {
+    handleCtrl(req, res, async (body) => {
+        var datas = await resultData()
+        return datas
+    });
 })
 
 var server = app.listen(process.env.PORT || 4321, function () {  

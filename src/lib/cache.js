@@ -1,6 +1,6 @@
 import {parseHtml} from './scraping';
 
-const RESP = []
+const COUNTRIES = []
 
 const resultData = async() => {
     let array = await parseHtml()
@@ -8,20 +8,38 @@ const resultData = async() => {
     for (let i = 0; i < array.length; i++) {
         const arr = array[i];
         // console.log({arr});
-
-        RESP[`${arr[0]}`] = {
-            total_cases:arr[1], 
-            new_cases:arr[3], 
-            total_deaths:arr[4], 
-            new_deaths:arr[5],
-            total_recovered:arr[6],
-            active_cases:arr[8],
-            critical:arr[9],
-            top_cases:arr[11]
-        }
+        var str = await replace(arr)
+        var projection = await getProjection(str)
+        COUNTRIES.push(projection)
     }
-    console.log({RESP});
+    // console.log({COUNTRIES});
     
+    return COUNTRIES
+}
+
+const replace = (arr) => {
+    var newArr = []
+    for (let i = 0; i < arr.length; i++) {
+        let element = arr[i];
+        let str = element.replace(/,/gi, "")
+        newArr.push(str)
+    }
+    return newArr
+}
+
+const getProjection = (arr) => {
+    return {
+        countries:arr[0],
+        total_cases:parseInt(arr[1]) || 0, 
+        new_cases:parseInt(arr[3]) || 0, 
+        total_deaths:parseInt(arr[4]) || 0, 
+        new_deaths:parseInt(arr[5]) || 0,
+        total_recovered:parseInt(arr[6]) || 0,
+        active_cases:parseInt(arr[8]) || 0,
+        critical:parseInt(arr[9]) || 0,
+        top_cases:parseFloat(arr[11]) || 0
+        
+    }
 }
 
 module.exports = {
