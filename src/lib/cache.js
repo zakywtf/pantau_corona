@@ -2,7 +2,7 @@ import {parseHtml} from './scraping';
 
 const COUNTRIES = []
 
-const resultData = async() => {
+const countries = async(signature) => {
     let array = await parseHtml()
     
     for (let i = 0; i < array.length; i++) {
@@ -13,8 +13,12 @@ const resultData = async() => {
         COUNTRIES.push(projection)
     }
     // console.log({COUNTRIES});
-    
-    return COUNTRIES
+    // console.log({signature:process.env.SIGNATURE_KEY});
+    if(signature == process.env.SIGNATURE_KEY){
+        return COUNTRIES
+    }else{
+        throw new Error('Signature key invalid!')
+    }
 }
 
 const replace = (arr) => {
@@ -43,5 +47,5 @@ const getProjection = (arr) => {
 }
 
 module.exports = {
-    resultData
+    countries
 }
