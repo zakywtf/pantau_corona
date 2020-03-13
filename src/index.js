@@ -2,6 +2,7 @@ import express from 'express';
 import {countries, detailCountry} from './lib/cache';
 import {doParseHtml} from './lib/scraping';
 import handleCtrl from './lib/ctrlHandler'
+import validateSignature from './lib/validateSignature';
 import dotenv from 'dotenv'
 
 var app = express();  
@@ -11,17 +12,21 @@ app.get('/',async (req,res)=>{
     res.end('oke')
 })
 
-app.get('/corona/countries/:signature_key', async (req, res) => {
-    handleCtrl(req, res, async (body) => {
-        var {signature_key} = req.params
-        return await countries(signature_key)
+app.get('/corona/countries', async (req, res) => {
+    validateSignature(req, res, async (body) => {
+        handleCtrl(req, res, async (body) => {
+            return await countries()
+        });
     });
+    
 })
 
-app.get('/corona/detail/:country/:signature_key', async (req, res) => {
-    handleCtrl(req, res, async (body) => {
-        var {country, signature_key} = req.params
-        return await detailCountry(country, signature_key)
+app.get('/corona/detail/:country', async (req, res) => {
+    validateSignature(req, res, async (body) => {
+        handleCtrl(req, res, async (body) => {
+            var {country} = req.params
+        return await detailCountry(country)
+        });
     });
 })
 

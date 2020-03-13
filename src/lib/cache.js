@@ -1,8 +1,9 @@
 import {getParseHtml} from './scraping';
 
 const COUNTRIES = []
+const DETAIL_COUNTRIES = {}
 
-const countries = async(signature) => {
+const countries = async() => {
     let array = await getParseHtml()
     let arrayOfArray = array[0]
     
@@ -11,12 +12,15 @@ const countries = async(signature) => {
         var str = await replace(arr)
         var projection = await getProjection(str)
         COUNTRIES.push(projection)
+        DETAIL_COUNTRIES[`${projection.country}`] = projection
     }
-    if(signature == process.env.SIGNATURE_KEY){
-        return COUNTRIES
-    }else{
-        throw new Error('Signature key invalid!')
-    }
+    console.log({COUNTRIES, DETAIL_COUNTRIES});
+    
+    return COUNTRIES
+}
+
+const detailCountry = async(country) => {
+    return DETAIL_COUNTRIES[`${country}`]
 }
 
 const replace = (arr) => {
@@ -31,7 +35,7 @@ const replace = (arr) => {
 
 const getProjection = (arr) => {
     return {
-        countries:arr[0],
+        country:arr[0],
         total_cases:parseInt(arr[1]) || 0, 
         new_cases:parseInt(arr[3]) || 0, 
         total_deaths:parseInt(arr[4]) || 0, 
@@ -45,5 +49,6 @@ const getProjection = (arr) => {
 }
 
 module.exports = {
-    countries
+    countries,
+    detailCountry
 }
