@@ -1,5 +1,6 @@
 import express from 'express';
 import {countries, detailCountry} from './lib/cache';
+import {doParseHtml} from './lib/scraping';
 import handleCtrl from './lib/ctrlHandler'
 import dotenv from 'dotenv'
 
@@ -24,7 +25,8 @@ app.get('/corona/detail/:country/:signature_key', async (req, res) => {
     });
 })
 
-var server = app.listen(process.env.PORT || 4321, function () {  
+var server = app.listen(process.env.PORT || 4321, function () { 
+    doParseHtml()
     var host = server.address().address  
     var port = server.address().port  
     console.log("Example app listening at http://%s:%s", host, port)  

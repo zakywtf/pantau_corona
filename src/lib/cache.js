@@ -1,19 +1,17 @@
-import {parseHtml} from './scraping';
+import {getParseHtml} from './scraping';
 
 const COUNTRIES = []
 
 const countries = async(signature) => {
-    let array = await parseHtml()
+    let array = await getParseHtml()
+    let arrayOfArray = array[0]
     
-    for (let i = 0; i < array.length; i++) {
-        const arr = array[i];
-        // console.log({arr});
+    for (let i = 0; i < arrayOfArray.length; i++) {
+        const arr = arrayOfArray[i];
         var str = await replace(arr)
         var projection = await getProjection(str)
         COUNTRIES.push(projection)
     }
-    // console.log({COUNTRIES});
-    // console.log({signature:process.env.SIGNATURE_KEY});
     if(signature == process.env.SIGNATURE_KEY){
         return COUNTRIES
     }else{
