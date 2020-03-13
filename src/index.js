@@ -13,11 +13,11 @@ app.get('/',async (req,res)=>{
 })
 
 app.get('/corona/countries', async (req, res) => {
-    validateSignature(req, res, async (body) => {
+    // validateSignature(req, res, async (body) => {
         handleCtrl(req, res, async (body) => {
             return await countries()
         });
-    });
+    // });
     
 })
 
