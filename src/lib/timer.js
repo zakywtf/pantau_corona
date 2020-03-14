@@ -7,7 +7,7 @@ const initTimer=(callbackDaily)=>{
 }
 
 const initDailyTimer=(callback)=>{
-    const nextDay = moment().add(1,'day').format('YYYY-MM-DD');
+    const nextDay = moment().add(2,'hours').format('YYYY-MM-DD HH:mm:ss');
     const nextLocalTime = moment(nextDay).tz(TIMEZONE);
     const timeLeft = moment.duration(nextLocalTime.diff(moment()));
     console.log('nextCalls in', {timeLeft});
