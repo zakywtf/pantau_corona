@@ -1,5 +1,5 @@
 import express from 'express';
-import {countries, detailCountry, tips} from './lib/cache';
+import {countries, detailCountry} from './lib/cache';
 import {doParseHtml} from './lib/scraping';
 import handleCtrl from './lib/ctrlHandler'
 import dotenv from 'dotenv'
@@ -21,12 +21,6 @@ app.get('/corona/detail/:country', async (req, res) => {
     handleCtrl(req, res, async (body) => {
         var {country} = req.params
         return await detailCountry(country)
-    });
-})
-
-app.get('/corona/tips', async (req, res) => {
-    handleCtrl(req, res, async (body) => {
-        return await tips()
     });
 })
 

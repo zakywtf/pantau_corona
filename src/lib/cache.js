@@ -1,5 +1,4 @@
 import {getParseHtml} from './scraping';
-import {TIPS} from '../config/constant';
 
 const COUNTRIES = []
 const DETAIL_COUNTRIES = {}
@@ -22,10 +21,6 @@ const countries = async() => {
 
 const detailCountry = async(country) => {
     return DETAIL_COUNTRIES[`${country}`]
-}
-
-const tips = async() => {
-    return TIPS
 }
 
 const replace = (arr) => {
@@ -55,6 +50,5 @@ const getProjection = (arr) => {
 
 module.exports = {
     countries,
-    detailCountry,
-    tips
+    detailCountry
 }
