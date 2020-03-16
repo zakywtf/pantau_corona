@@ -20,9 +20,13 @@ const getData = async(url) => {
 const doParseHtml = async() => {
     const parseHtml = async() => {
         const resp = await getData(`${process.env.SERVER_URI}`)
+        
         let row = resp.split('<div class="row">')
         let col = row[3].split('<div class="col-md-8">')
-        let mTable = col[1].split('<div id="main_table_countries_div" style="font-size:15.5px; text-align:left; width:100%;" class="table-responsive">')
+        // let mTable = col[1].split('<div id="main_table_countries_div" style="font-size:15.5px; text-align:left; width:100%;" class="table-responsive">')
+        let mTable = col[1].split('<table id="main_table_countries" class="table table-bordered table-hover">')
+        // console.log({col, mTable});
+        
         var rows = await parseTable(mTable[1])
         console.log(`req data to ${process.env.SERVER_URI}`);
         
@@ -63,6 +67,8 @@ const doParseHtml = async() => {
     }
 
     const parseTable = async(table) => {
+        console.log({table});
+        
         let tBody = table.split('<tbody>')
         tBody = tBody[1].split('</tbody>');
         tBody = strReplace(tBody[0], '<tr style role="row" class="odd">', '<tr style role="row" class="even">')
