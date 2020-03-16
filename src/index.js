@@ -1,5 +1,5 @@
 import express from 'express';
-import {countries, detailCountry} from './lib/cache';
+import {countries, detailCountry, tips} from './lib/cache';
 import {doParseHtml} from './lib/scraping';
 import handleCtrl from './lib/ctrlHandler'
 import validateSignature from './lib/validateSignature';
@@ -28,6 +28,15 @@ app.get('/corona/detail/:country', async (req, res) => {
         return await detailCountry(country)
         });
     });
+})
+
+app.get('/corona/tips', async (req, res) => {
+    validateSignature(req, res, async (body) => {
+        handleCtrl(req, res, async (body) => {
+            return await tips()
+        });
+    });
+    
 })
 
 var server = app.listen(process.env.PORT || 4321, function () { 
