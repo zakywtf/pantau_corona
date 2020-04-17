@@ -27,7 +27,7 @@ const doParseHtml = async() => {
         let mTable = col[1].split('<table id="main_table_countries" class="table table-bordered table-hover">')
         // console.log({col, mTable});
         
-        var rows = await parseTable(mTable[1])
+        var rows = await parseTable(mTable[0])
         console.log(`req data to ${process.env.SERVER_URI}`);
         
         PARSE_HTML.push(parseRows(rows))
@@ -67,7 +67,7 @@ const doParseHtml = async() => {
     }
 
     const parseTable = async(table) => {
-        console.log({table});
+        // console.log({table});
         
         let tBody = table.split('<tbody>')
         tBody = tBody[1].split('</tbody>');
