@@ -34,9 +34,10 @@ const replace = (arr) => {
 }
 
 const getProjection = (arr) => {
+    // console.log({arr});
     return {
-        country:arr[0],
-        total_cases:parseInt(arr[1]) || 0, 
+        country:arr[1],
+        total_cases:parseInt(arr[2]) || 0, 
         new_cases:parseInt(arr[3]) || 0, 
         total_deaths:parseInt(arr[4]) || 0, 
         new_deaths:parseInt(arr[5]) || 0,
